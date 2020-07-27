@@ -1,6 +1,6 @@
 import Foundation
 import FoundationNetworking
-
+import SwiftJWT
 struct MyClaims: Claims {
                  var iss: String
                  var  aud: String
