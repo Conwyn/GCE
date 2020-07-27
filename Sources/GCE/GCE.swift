@@ -1,3 +1,31 @@
+import Foundation
+import FoundationNetworking
+import Path
+import Just
+import SwiftJWT
+import NotebookExport
+
+struct MyClaims: Claims {
+                 var iss: String
+                 var  aud: String
+                 var  exp: Date  
+                 var iat: Date 
+                 var scope: String}
+
+public extension String {
+    @discardableResult
+    func shell(_ args: String...) -> String
+    {
+        let (task,pipe) = (Process(),Pipe())
+        task.executableURL = URL(fileURLWithPath: self)
+        (task.arguments,task.standardOutput) = (args,pipe)
+        do    { try task.run() }
+        catch { print("Unexpected error: \(error).") }
+
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        return String(data: data, encoding: String.Encoding.utf8) ?? ""
+    }
+}
 public func GCEGetNotebookName()->(String,String){
  
 var notebookName:String = ""
